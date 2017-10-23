@@ -14,10 +14,17 @@ class SearchBox extends React.Component {
   render() {
     let dom =
     <div className="search-box">
-      <input onChange={(event) => this.setState({term: event.target.value})}/>
+      <input
+        value = {this.state.term}
+        onChange={(event) => {
+        onChange={event => this.onInputChange(event.target.value)}
+      />
     </div>;
     return dom;
   }
-
+  onInputChange(term){
+    this.setState({term});
+    this.props.onSearchTermChange(term);
+  }
 }
 export default SearchBox;

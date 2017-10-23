@@ -26,11 +26,8 @@ class App extends React.Component {
         selectedVideo: videos[0]
       });
     });
-  }
+  };
 
-  updateVideoSearch(word) => {
-    this.searchWord = word;
-  }
 
   render() {
     return (
