@@ -15,8 +15,7 @@ class SearchBox extends React.Component {
     let dom =
     <div className="search-box">
       <input
-        value = {this.state.term}
-        onChange={(event) => {
+        value={this.state.term}
         onChange={event => this.onInputChange(event.target.value)}
       />
     </div>;
