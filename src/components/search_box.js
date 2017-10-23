@@ -12,12 +12,12 @@ class SearchBox extends React.Component {
     this.state = {term: ''};
   }
   render() {
-    let dom = <div>
-    <input onChange={(event) => this.setState({term: event.target.value})}/>
-    "Value of the input: " + {this.state.term}
+    let dom =
+    <div className="search-box">
+      <input onChange={(event) => this.setState({term: event.target.value})}/>
     </div>;
     return dom;
   }
-  
+
 }
 export default SearchBox;
