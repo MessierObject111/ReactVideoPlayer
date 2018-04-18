@@ -1,30 +1,44 @@
+import _ from 'lodash';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import SearchBox from './components/search_box';
 import VideoList from './components/video_list';
 import VideoListItem from './components/video_list_item';
+import VideoDetail from './components/video_detail';
 
 import YTSearch from 'youtube-api-search';
 const API_KEY = 'AIzaSyCEZvUiWL3_AKX7hZuhyBejWNGZQgwI884';
+let searchWord = 'cats';
 
 // Create a new component which should produce some HTML
 class App extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {videos: []};
-
-    YTSearch({key: API_KEY, term: 'surfboards'}, (videos) => {
-      this.setState({videos});
+    this.state = {
+      videos: [],
+      selectedVideo: null
+    };
+    this.videoSearch(searchWord);
+  };
+  videoSearch(term) {
+    YTSearch({key: API_KEY, term: term}, (videos) => {
+      this.setState({
+        videos: videos,
+        selectedVideo: videos[0]
+      });
     });
-  }
+  };
 
 
   render() {
+    const videoSearch = _.debounce((term) => {this.videoSearch(term)}, 300);
     return (
       <div>
-        <SearchBox />
-        <VideoList videos={this.state.videos} />
+        <SearchBox onSearchTermChange={videoSearch}/>
+        <VideoDetail video={this.state.selectedVideo}/>
+        <VideoList
+          videos={this.state.videos}
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}/>
       </div>
     );
   }
